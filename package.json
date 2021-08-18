@@ -65,5 +65,9 @@
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.4"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/i-am-ok-dont-worry/react-router-data-resolver.git"
+  }
 }

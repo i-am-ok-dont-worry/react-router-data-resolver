@@ -5,6 +5,6 @@ export interface DataResolverRoute {
     exact?: boolean,
     strict?: boolean,
     routes?: DataResolverRoute[],
-    data?: () => Promise<any>,
+    data?: (arg: any) => Promise<any>,
     [propName: string]: any;
 }

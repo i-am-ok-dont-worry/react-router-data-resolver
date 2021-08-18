@@ -4,11 +4,15 @@ configured routes.
 
 
 ## Install 
+```bash
 npm install @iamok/react-router-data --save
+```
 
 or
 
+```bash
 yarn add @iamok/react-router-data
+```
 
 
 ## Usage
@@ -30,16 +34,35 @@ const dataRoutes = [
             {
                 path: '/page-1',
                 exact: true,
-                data: () => Promise.resolve('Data for page 1')
+                data: () => ({
+                    metaTitle: 'Title for page 1',
+                    metaDescription: 'Description for page 1'
+                })
             },
             {
                 path: '/page-2',
                 exact: true,
-                data: () => Promise.resolve('Data for page 2')
+                data: () => ({
+                    metaTitle: 'Title for page 2',
+                    metaDescription: 'Description for page 2'
+                })
             }
         ]
     }
 ];
 
-const data = await resolveData(req.url, dataRoutes);
+          
+app.get('*', async (req, res, next) => {
+  const seo = await resolveRouterData(req.url, dataRoutes);
+  const html = ReactDOMServer.renderToString(
+              <PageSeo title=={seo.metaTitle} description={seo.metaDescription}>
+                <Router />
+              </PageSeo>));
+              
+  res.send(`<!doctype html>${html}`);
+});          
 ```
+
+Note that `dataRoutes` can be resolved asynchronously. This can be useful if we need generic routes for different components
+and those routes can be only determined based on API call.
+e.g.: `/:page1` will link to Page1 or Page2 based on API condition

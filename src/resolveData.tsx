@@ -11,13 +11,14 @@ export const resolveRouterData = async (pathname: string, routes: DataResolverRo
             const dataResolver = (matchedRoute as DataResolverRoute).data;
 
             if (dataResolver && typeof dataResolver === 'function') {
-                const resultPromise = dataResolver();
+                const resultPromise = dataResolver(pathname);
                 if (resultPromise && resultPromise instanceof Promise) {
                     const result = await resultPromise;
                     return result;
                 }
             }
         } catch (e) {
+            console.error('Error resolveRouterData: ', e);
             return null;
         }
     } else {
